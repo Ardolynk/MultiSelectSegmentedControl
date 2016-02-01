@@ -91,14 +91,22 @@
 {
     NSUInteger tappedSegmentIndex = super.selectedSegmentIndex;
     if ([self.selectedIndexes containsIndex:tappedSegmentIndex]) {
+    	if ([self.delegate respondsToSelector:@selector(multiSelect:isAllowedToChangeValue:atIndex:)] &&
+    	    ![self.delegate multiSelect:self isAllowedToChangeValue:NO atIndex:tappedSegmentIndex]) {
+    	    return;
+    	}
         [self.selectedIndexes removeIndex:tappedSegmentIndex];
-        if (self.delegate) {
+        if ([self.delegate respondsToSelector:@selector(multiSelect:didChangeValue:atIndex:)]) {
             [self.delegate multiSelect:self didChangeValue:NO atIndex:tappedSegmentIndex];
         }
     }
     else {
+    	if ([self.delegate respondsToSelector:@selector(multiSelect:isAllowedToChangeValue:atIndex:)] &&
+    	    ![self.delegate multiSelect:self isAllowedToChangeValue:YES atIndex:tappedSegmentIndex]) {
+    	    return;
+    	}
         [self.selectedIndexes addIndex:tappedSegmentIndex];
-        if (self.delegate) {
+        if ([self.delegate respondsToSelector:@selector(multiSelect:didChangeValue:atIndex:)]) {
             [self.delegate multiSelect:self didChangeValue:YES atIndex:tappedSegmentIndex];
         }
     }
