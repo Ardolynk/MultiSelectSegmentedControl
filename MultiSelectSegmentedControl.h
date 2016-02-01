@@ -14,6 +14,8 @@
 @class MultiSelectSegmentedControl;
 
 @protocol MultiSelectSegmentedControlDelegate <NSObject>
+@optional
+-(BOOL)multiSelect:(MultiSelectSegmentedControl*) multiSelecSegmendedControl isAllowedToChangeValue:(BOOL) value atIndex: (NSUInteger) index;
 -(void)multiSelect:(MultiSelectSegmentedControl*) multiSelecSegmendedControl didChangeValue:(BOOL) value atIndex: (NSUInteger) index;
 @end
 
